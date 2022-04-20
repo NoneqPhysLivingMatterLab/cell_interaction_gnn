@@ -1,0 +1,2 @@
+/test/paw/W-R1/
+/test/paw/W-R2/

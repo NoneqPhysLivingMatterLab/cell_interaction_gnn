@@ -1,0 +1,15 @@
+# parameters for plot
+font.family: 'sans-serif'
+xtick.direction: 'in'
+ytick.direction: 'in'
+xtick.major.width: 0.75
+ytick.major.width: 0.75
+font.size: 10
+axes.linewidth: 0.75
+figx: 3.14 ##default 3.14
+figy: 2.7 ##default 2.7
+left: 0.2
+right: 0.9
+bottom: 0.2
+top: 0.8
+dpi: 300

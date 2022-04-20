@@ -1,0 +1,11 @@
+n: 50   # number of discretization
+
+plot_option: 0 ## if 1 plot
+cell_select: "all" ## Set "all". "correct" for only correct cells, all for all the cells.
+
+ModelType: "MaxMacroF1"
+
+subnetwork_name: norm_all_1hot_rev
+
+#Fixed parameters
+ClassList: [0,1,2]

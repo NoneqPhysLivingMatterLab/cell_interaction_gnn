@@ -1,0 +1,53 @@
+## Change plot range depending on the data.
+ymax_set: 0.2
+ymin_set: -0.2
+
+
+## If you want change the figure format, change the following parameters.
+
+celltype_name_list: ["Others","Target cell","Neighbor cell"]
+color_list: ["dodgerblue","mediumvioletred","lightseagreen","olive","purple"]
+celltype_list: ["No behavior","Delamination","Division"]
+celltype_label: ["NB","Del","Div"]
+
+clist: ["magenta","cyan","green","blue","black","yellow"]
+
+
+
+gpu: -1 # we don't use GPU
+
+figx_factor: 1.3  #def 1.3
+figy_factor: 3.2 #def 3.2
+figy_factor_wolabel: 1.5 #def 1
+
+font_normal: 7 ###通常使いたいfontsize
+
+nbin_y: 3
+
+hspace: 0.2 ## 0.2 for ext, 0.1 for full
+
+axhline_lw: 0.5
+    
+axis_width: 0.5
+
+figx: 1   #3.14 for Full model, 1 for ext
+figy: 1.5   #2.9 for Full model, 1.5 for ext
+left: 0.2
+right: 0.6 # 0.9 for full model, 0.6 for external model
+bottom: 0.2
+top: 0.8
+dpi: 300
+
+capsize: 2
+
+pad: 3
+
+font.family: 'sans-serif'
+xtick.direction: 'out'
+ytick.direction: 'out'
+font.size: 3 #5 for full, 3 for ext
+
+locator_params_nbins: 4
+
+xtick.major.size: 1
+ytick.major.size: 1

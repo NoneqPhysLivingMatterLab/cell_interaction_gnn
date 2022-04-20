@@ -1,0 +1,105 @@
+dirpath_work: "../"  ## dirpath of "result".
+
+###Input parameters
+step_total: 2000  ## number of epoch def=2000
+display_rate: 50 ## rate of display of results (unit:epoch) def=50
+model_save_rate: 20 ## rate of saving models (unit:epoch) def = 20
+
+gpu: 1 ## GPU number. you can check your available GPU by nvidia-smi -l.
+
+null_net: 1 ## If 1, we introduce null graphs to train the model to satisfay the valid baselines for attribution. if 0, we don't introduce null graphs. def = 1
+
+average_switch:  1 ## if average 1, mean aggregation for spatial message passing. If 0, sum aggregation.
+
+architecture:  "SP"   ### SP: for unidirectional GNN model, NSP for bidirectional GNN model
+
+
+n_layers: 1  ### number of layers of a MLP
+hid_node: 50  ## number of nodes in the hidden layer
+
+
+NoSelfInfo: 1 # if 0, full model. if 1, cell external model.
+
+in_plane: 1  # number of in-plane message passing
+
+
+p_hidden: 0.1   ## dropout rate
+
+    
+num_time: 4  ## number of time frames. N_t.
+
+
+## Select feature set used for the training. 
+##"Area_norm": normalized area, "G1Signal_norm":normalized G1 signal, 
+##"celltype_future_onehot2": future fate. this feature set to null for the final frame of each network.
+##"random_feature": uniform random numbers [0,1]
+## "zero": null vector
+feature_list: 
+    - 'zero'
+    - 'zero'
+    - 'celltype_future_onehot2'
+    - 'random_feature'
+    
+opt_name: "adam"  ## name of optimizer. Use adam.
+learning_rate: 0.0001   # learning rate
+
+n_label: 3 ## number of cell fate
+fate_label:
+    - "NB"
+    - "Del"
+    - "Div"
+
+
+
+
+####Other parameters which are not necessary to change in this demo program. Please don't change.
+
+null_weight: 0 ##if 0, softmax score for null graphs are even 1/3. if 1, it is set to the number ratio. 
+
+num_even: 0 ## if num_even==1, the label number is set to equal for training data. 
+
+edge_switch: 0 ## if 1, use edge_feature
+
+border: 0 # if zero, we don't use border cells. 
+
+dropout: 1   
+
+weight_decay: 0.0
+
+feature_self: "AllZero"  #if NoSelfInfo = 1, we asign this feature. 
+
+### Regularization option
+reg: 0 ## 0: no regularization, 1: node-wise (layernorm), 2: batch-norm (一つのtime network内で平均),3: node-wise (layernorm) 出力手前に入れない, 4: batch-norm (一つのtime network内で平均)出力手前に入れない
+norm_final: 0 # if zero, no norm in the final layer of each function
+
+
+cuda_clear: 0
+
+shuffle: 0 # shuffle labels if 1. none if 0
+network_num: "norm_all_1hot_rev_4-FLedit"
+skip: 0 ### If 1, skip connection. If 0, no skip connection
+
+partial_test: 0  # if zero, use all the data
+
+crop_width_list_train:
+    - 320
+crop_width_list_test:
+    - 320
+
+
+penalty_zero: 1.0
+
+
+iter_n: 1
+feature: 'feature_concat' 
+feature_edge_concat: 'feature_edge_concat' 
+
+
+### Select Edge features
+feature_list_edge:
+    - "Rank1ForSrc"
+    - "Rank2ForSrc"
+    - "Rank3ForSrc"
+    - "RandomEdge1"
+
+omit_t0: 0  ## if 1, we omit the first frame

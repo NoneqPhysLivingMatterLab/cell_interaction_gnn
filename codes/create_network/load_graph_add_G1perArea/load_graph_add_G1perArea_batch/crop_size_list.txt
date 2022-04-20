@@ -1,0 +1,3 @@
+# crop_width, crop_height, crop_shift_height
+360,360,0
+360,360,0

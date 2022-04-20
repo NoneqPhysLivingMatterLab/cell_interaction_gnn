@@ -1,0 +1,6 @@
+network_name: "norm_all_1hot_rev"
+time_min: 4
+time_max: 4
+shuffle_switch: 0
+#tif_size: 500  ## If simulation data, we need tiff size.
+#exp_sim_switch: 1 # if 1, experiment. if 0, simulation

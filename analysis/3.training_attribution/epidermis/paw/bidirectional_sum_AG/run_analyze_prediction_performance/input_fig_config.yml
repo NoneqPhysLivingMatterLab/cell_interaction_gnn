@@ -1,0 +1,38 @@
+# parameters for plot
+
+xlabel: "Number of time frames"
+ylabel: "AUC"
+
+name_list: ["4"] #xlabel name
+    
+#Set 0 for the following options
+weight_plot: 0 ## set 1 if you want to plot weight and bias. 
+balancedACCWeighted_plot: 0
+NumberOfCorrectPrediction_plot: 0
+
+
+font.family: 'sans-serif'
+xtick.direction: 'in'
+ytick.direction: 'in'
+xtick.major.width: 0.75
+ytick.major.width: 0.75
+font.size: 10
+axes.linewidth: 0.5
+figx_time: 5 ##paper:3
+figy_time: 4 ##paper:3
+fig_hspace: 0.6 #paper 0.6
+fig_wspace: 0.5 #paper 0.4
+
+left: 0.2 #0.2
+right: 0.8 #0.9
+bottom: 0.1 #0.2
+top: 0.9 #0.8
+dpi: 300
+fig_factor: 1
+legend_size: 5
+msize: 5
+capsize: 4
+
+
+
+

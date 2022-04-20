@@ -1,0 +1,27 @@
+save_dir_name: "feature_ZZFR" #Name of the directory where you want to output
+random_index: 5 ## index for random feature, starting from zero
+anal_type: "MeanForEachFutureFate"  #max or mean, min  MeanForEachFutureFate ,MeanForAllCells
+Normalize: "Raw"  ##RMS, Raw
+
+ModelType: "MaxMacroF1"
+
+attribution_dir_name_option: "" #Set blank. If you have changed the name of attribution directory, you can use this option to designate the dir name.
+
+ext_switch: "ext" # if you use cell external model, set ext. Otherwise, "full". 
+
+feature_list: # Use "NB","Del","Div" for the NFB
+    - "Zero"
+    - "Zero"
+    - "NB"
+    - "Del"
+    - "Div"
+    - "Random"
+    
+
+
+n: 50   # number of discretization
+n_net: "all"
+LabelType: "AllCells"   ##all, correct, AllCells
+top_n: 10
+
+#attribution_version: 26

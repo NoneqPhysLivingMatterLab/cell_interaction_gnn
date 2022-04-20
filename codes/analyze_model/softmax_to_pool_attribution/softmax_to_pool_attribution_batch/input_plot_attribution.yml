@@ -1,0 +1,22 @@
+n: 50   # number of discretization
+ModelType: "MaxMacroF1"
+
+gpu: 3 #Select GPU number used for loading data
+
+
+##Const. Don't change.
+#attribution_version: 26
+n_net: "all"
+LabelType: "AllCells"   ##all, correct, AllCells
+celltype_list: ["No behavior","Delamination","Division"]
+
+
+plot_option: 0 ## if 1 plot
+cell_select: "all" ## Set "all". "correct" for only correct cells, all for all the cells.
+
+top_n: 10
+m: 10 ## log top m th attribution data for plot
+m_plot: 5 ## plot only m_plotth
+
+skip_misc: 1 # Set 1 to skip parts currently unnecessary  in summarize_attribution.py
+skip_misc_pool_attribution: 1 # Set 1 to skip parts currently unnecessary in pool_attribution.py

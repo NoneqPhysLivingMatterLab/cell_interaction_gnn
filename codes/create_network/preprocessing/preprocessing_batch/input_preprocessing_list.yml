@@ -1,0 +1,41 @@
+base_path: 
+    - "../../../../../data/simulation/del-div/sample0/"
+    - "../../../../../data/simulation/del-div/sample1/"
+    
+segmentation_filename: 
+    - "segmentation.npy"
+    - "segmentation.npy"
+
+lineage_filename: 
+    - "lineage.npy"
+    - "lineage.npy"
+
+
+crop_height: 
+    - 320
+    - 320
+
+crop_width: 
+    - 320
+    - 320
+
+
+crop_shift_height: 
+    - 0
+    - 0
+
+npy: 
+    - 1  ## For npy file, set 1. For mat, 0.
+    - 1
+  
+sim_switch: # if you process the demo simulation data, set to 1. Otherwise, set 0.
+    - 1
+    - 1
+    
+label_ID_link_necessity: ## If the cell ID and the cell label are already the same, we set label_ID_link_necessity:0. Otherwise, label_ID_link_necessity:1.
+    - 1  
+    - 1
+    
+error_correction_list: ## we need correction, input list [frame, cellID_error, label]
+    - 0
+    - 0

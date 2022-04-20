@@ -1,0 +1,14 @@
+network_name: "norm_all_1hot_rev"
+time_min: 4
+time_max: 4
+shuffle_switch: 0
+
+#Do not change the following parameters
+
+#For simualation
+#index_list_minmax: [] # index list used to normalize values
+# name_list_minmax: [] # index list used to normalize values
+
+#For experiment
+index_list_minmax: [4,5,6,7,8,9] # index list used to normalize values
+name_list_minmax: ["X","Y","Voronoi_area","G1_voronoi","Area","G1"] # index list used to normalize values

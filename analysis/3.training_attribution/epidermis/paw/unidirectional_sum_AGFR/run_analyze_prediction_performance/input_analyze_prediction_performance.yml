@@ -1,0 +1,22 @@
+work_dir: "../../../../../../analysis/3.training_attribution/epidermis/paw/unidirectional_sum_AGFR/" 
+
+base_name: "4time_sum_AGFR"  ## base name of the data
+
+dir_base_list: ## directory name for each condition
+    -  "../../../../../../analysis/3.training_attribution/epidermis/paw/unidirectional_sum_AGFR/result/SP_fnum6_time4_netnorm_all_1hot_rev-FLedit-G1Signal_ptest0_noself0_inplane1_skip0_nullnet1_ave0_edge0_reg0-0_nullw0_even0/model=23_epoch=2000_hidnode=50_lr=0.000100_opt=adam_feature=feature_concat_infeats=6_penalty=1.0_shuffle=0_noself=0_drop=0.10_wd=0.000000_inplane=1_omitt0=0_border=0_ptest=0_layer=1"
+       
+index_list: ## index of samples
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    
+    
+#Don't change below
+celltype_list: ["No behavior","Del","Div"]
+dict_list: [0,1,2]
+    
+gpu: -1 # if you use CPU, set -1
+    
