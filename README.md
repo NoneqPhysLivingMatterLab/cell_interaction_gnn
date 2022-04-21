@@ -146,7 +146,7 @@ analysis/2.create_network/simulation/del-div/extract_subnetwork_batch
 
 ## 2. Train the GNN model
 
-Run run_training_parallel.py in the following directory:
+- Run run_training_parallel.py in the following directory:
 
 ```
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR 
@@ -161,7 +161,7 @@ Also, you can change the training parameters in input_run_training_cell_fate_gnn
 
 ## 3. Analyze the peformance of the training
 
-Run run_analyze_prediction_performance.py in the following directory:
+- Run run_analyze_prediction_performance.py in the following directory:
 
 ```
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/run_analyze_prediction_performance
@@ -181,7 +181,6 @@ analysis/3.training_attribution/simulation/del-div/summary_Performance-4time_ext
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/calculate_attribution_batch
 ```
 
-Calculate attribution of the GNN model:
 
 - Run run_softmax_to_pool_attribution.py in the following directory: 
 
