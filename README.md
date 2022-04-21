@@ -189,7 +189,7 @@ Calculate attribution of the GNN model:
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/softmax_to_pool_attribution_batch
 ```
 
-You can pool attributions into each feature type defined by time frame, relative position and index of feature vector. 
+which will pool attributions into each feature type defined by time frame, relative position, and index of feature vector. 
 
 
 ## 5. Plot the attribution 
@@ -208,7 +208,7 @@ Bar plots of the attribution are saved in the following directory:
 analysis/3.training_attribution/simulation/del-div_for_share/ZZFR_2000/bar_plot_result/feature_ZZFR_sample=6/MeanForEachFutureFate/MaxMacroF1/AllCells/Raw/fig/feature_ZZFR_SampleAverage_IG_all_sample=6_standadized_group_nolegend_ylim_-0.20_0.20_rotate.png
 ```
 
-which should produce plot similar to Fig.4D of the paper.
+which should produce a plot similar to Fig.4D of the paper.
 
 
 
