@@ -6,6 +6,8 @@ Takaki Yamamoto, Katie Cockburn, Valentina Greco, Kyogo Kawaguchi
 
 "Probing the rules of cell coordination in live tissues by interpretable machine learning based on graph neural networks"
 
+[bioRxiv, 2021.06.23.449559 (2021).](https://www.biorxiv.org/content/10.1101/2021.06.23.449559v2)
+
 
 # Abstract
 
@@ -48,7 +50,7 @@ In this paper, we used 'ActinSegmentationArea' (cell area) and 'G1MarkerInActinS
 
 See `data/check_input_data_format.ipynb` to check the format. 
 
-### Spatio-temporal graphs (DGL format) created from segmentation and trackdata
+### Spatio-temporal graphs (DGL format) created from segmentation and track data
 
 We used deep graph library (DGL) to make graph objects, and saved them as .pickle. 
 
@@ -216,9 +218,9 @@ If this repository is helpful for your research, please cite the following publi
 
 Takaki Yamamoto, Katie Cockburn, Valentina Greco, Kyogo Kawaguchi
 
-bioRxiv, 2021.06.23.449559 (2021).
+"Probing the rules of cell coordination in live tissues by interpretable machine learning based on graph neural networks"
 
-https://www.biorxiv.org/content/10.1101/2021.06.23.449559v1
+[bioRxiv, 2021.06.23.449559 (2021).](https://www.biorxiv.org/content/10.1101/2021.06.23.449559v2)
 
 # License
 

@@ -6,6 +6,8 @@ Takaki Yamamoto, Katie Cockburn, Valentina Greco, Kyogo Kawaguchi
 
 "Probing the rules of cell coordination in live tissues by interpretable machine learning based on graph neural networks"
 
+[bioRxiv, 2021.06.23.449559 (2021).](https://www.biorxiv.org/content/10.1101/2021.06.23.449559v2)
+
 
 ## Abstract
 
@@ -195,6 +197,6 @@ If this repository is helpful for your research, please cite the following publi
 
 Takaki Yamamoto, Katie Cockburn, Valentina Greco, Kyogo Kawaguchi
 
-bioRxiv, 2021.06.23.449559 (2021).
+"Probing the rules of cell coordination in live tissues by interpretable machine learning based on graph neural networks"
 
-https://www.biorxiv.org/content/10.1101/2021.06.23.449559v1
+[bioRxiv, 2021.06.23.449559 (2021).](https://www.biorxiv.org/content/10.1101/2021.06.23.449559v2)
