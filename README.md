@@ -23,19 +23,19 @@ Robustness in developing and homeostatic tissues is supported by various types o
 - sklern  0.23.2
 - Docker
 
-We used a Docker container installing by `docker pull pytorch:1.6.0-cuda10.1-cudnn7-runtime`
+We used a Docker container: `docker pull pytorch:1.6.0-cuda10.1-cudnn7-runtime`
 
 
 # Dataset
 
-We convert the segmentation image from the live-image/simulation data and the track data into the spatio-temporal graphs (DGL format). 
+We convert the segmentation image from the live-image/simulation data and the cell track data into spatio-temporal graphs (DGL format). 
 
 ## Data format
 
 ### Segmentation image (segmentation.npy)
 
-Numpy array [T,H,W] of a image sequence, i.e. label image sequence is save as numpy array.
-In the label images, the cell borders (width = 1 pix) are set to zero value. 
+Numpy array [T,H,W] of an image sequences and labels are saved as numpy array.
+In the label images, the cell borders (width = 1 pix) are set as 0. 
 
 See `data/check_input_data_format.ipynb` to check the format. 
 
@@ -45,21 +45,21 @@ Numpy array of 10 columns with the following fields.
 
 ['Timeframe', 'CloneID', 'ParentID', 'CellID','PositionX','PositionY','VoronoiArea','G1MarkerInVoronoiArea','ActinSegmentationArea','G1MarkerInActinSegmentationArea']
 
-In 'Timeframe', the initial frame number is set to "0". 
-In this paper, we used 'ActinSegmentationArea' (cell area) and 'G1MarkerInActinSegmentationArea' (Total G1 marker intensity per cell) only in paw epidermis. Also, we did not use the features 'VoronoiArea' and 'G1MarkerInVoronoiArea'. 
+In 'Timeframe', the initial frame number is set as 0. 
+'ActinSegmentationArea' (cell area) and 'G1MarkerInActinSegmentationArea' (Total G1 marker intensity per cell) were only generated for the paw epidermis data. 'VoronoiArea' and 'G1MarkerInVoronoiArea' were not used in the results of the paper. 
 
 See `data/check_input_data_format.ipynb` to check the format. 
 
 ### Spatio-temporal graphs (DGL format) created from segmentation and track data
 
-We used deep graph library (DGL) to make graph objects, and saved them as .pickle. 
+We used deep graph library (DGL) to make graph objects and saved them as .pickle. 
 
 The node type is defined by the frame number of each cell in each graph. We name the node names as  “t0”, “t1", “t2”... from the earliest frame (see figure below).
-There are three edge types:  “time”, “time_rev”, “interaction”. “time” is the temporal edge, representing lineage, directing from the past to future, while “time_rev” is the temporal edge directing from the future to the past. “interaction” edges are spatial edges between neighboring cells. Also, you need to define cell features as node features, ex. “celltype_future_onehot2"(NFB in our manuscript), “random_feature”, etc. Regarding NFB, since NFB at the final time frame is the cell fates we try to predict, we set NFB at the final layer by the null vectors.
+There are three edge types:  “time”, “time_rev”, “interaction”. “time” is the temporal edge, representing lineage, directing from the past to future, while “time_rev” is the temporal edge directing from the future to the past. “interaction” edges are spatial edges between neighboring cells. Additional cell features can be added as node features, ex. “celltype_future_onehot2" (NFB in our manuscript), “random_feature”, etc. We set NFB at the final layer as [0,0,0].
 
  - Node type
  
-'t0', 't1', 't2'...: ex. 't0' means the cell type of the cells in the first time frame, 't1' means the cell type of the cells in the second time frame. 
+'t0', 't1', 't2'...: ex. 't0' means the cell type of the cells in the first time frame, 't1' means the cell type of the cells in the second time frame of the input. 
 
  - Edge type
     - Temporal
@@ -85,13 +85,13 @@ You can find the segmentation and track data in the following directories:
 
 # Quick demonstration for training of the GNN models
 
-If you would like to quickly try to train the GNN model with sample graphs, please move to the following directory and run the sample codes with sample data.
-
+For a quick try, move to 
 ```
 codes/training_quick_demo
 ```
+and run the sample codes with the sample data.
 
-If you would like to create spatio-temporal graphs, train the GNN model and then calculate the attribution, see the usage below. 
+To create spatio-temporal graphs by yourself, train the GNN model, and calculate the attribution, see below. 
 
 # Usage
 
@@ -121,7 +121,7 @@ analysis/1.preprocessing/simulation/del-div/preprocessing_batch
 
     - graphs
     
-        For example, the graphs are output as the following file: t=0to3 in the filename means the graph created from frame 0 to 3. 
+        For example, the graphs are output as the following file (t=0to3 in the filename indicates that the graph is created from frame 0 to 3): 
         
     ```
    data/simulation/del-div/analysis/networknorm_all_1hot_rev-FLedit_crop_w=320_h=320/networknorm_all_1hot_rev-FLedit_num_w=320_h=320_time=4/NetworkWithFeartures_t=0to3.pickle
@@ -129,7 +129,7 @@ analysis/1.preprocessing/simulation/del-div/preprocessing_batch
     
      - IDs
      
-        For example, the list of node IDs in the final frame of each graph which you want to predict the fate of is saved as the following file: t=0to3 in the filename means the graph created from frame 0 to 3. 
+        For example, the list of node IDs in the final frame of each graph which you want to predict the fate of is saved as the following file:
         
     ``` 
     data/simulation/del-div/analysis/networknorm_all_1hot_rev-FLedit_crop_w=320_h=320/networknorm_all_1hot_rev-FLedit_cellID_FinalLayer_noborder_num_w=320_h=320_time=4/CellID_FinalLayer_t=0to3.txt
@@ -155,7 +155,7 @@ analysis/3.training_attribution/simulation/del-div/feature_ZZFR
 You can execute training of a GNN model (4-time cell external model with mean aggregation with NFB and randome features) using the simulation data as an example. 
 Hereafter, the training will be performed for 6 samples on GPU in this demo codes (~1.1GB GPU memory is used for sample.).
 You can change the number of samples by changing the number "n_batch" of samples in run_training_parallel.py.
-Also, you can change any training parameteres in input_run_training_cell_fate_gnn.yml.
+Also, you can change the training parameters in input_run_training_cell_fate_gnn.yml.
 
 
 
@@ -167,7 +167,7 @@ Run run_analyze_prediction_performance.py in the following directory:
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/run_analyze_prediction_performance
 ```
 
-You can obtain training curves and peformance averaged over samples in the following directory:
+Training curves and performance averaged over samples our saved in the following directory:
 
 ```
 analysis/3.training_attribution/simulation/del-div/summary_Performance-4time_ext_mean_ZZFR-0.50
@@ -181,7 +181,7 @@ analysis/3.training_attribution/simulation/del-div/summary_Performance-4time_ext
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/calculate_attribution_batch
 ```
 
-You can calculate attribution of the GNN model. 
+Calculate attribution of the GNN model:
 
 - Run run_softmax_to_pool_attribution.py in the following directory: 
 
@@ -202,13 +202,13 @@ You can pool attributions into each feature type defined by time frame, relative
 analysis/3.training_attribution/simulation/del-div/feature_ZZFR/bar_plot_attribution_batch
 ```
 
-You can obtain the bar plots of the attribution in the following directory: 
+Bar plots of the attribution are saved in the following directory: 
 
 ```
 analysis/3.training_attribution/simulation/del-div_for_share/ZZFR_2000/bar_plot_result/feature_ZZFR_sample=6/MeanForEachFutureFate/MaxMacroF1/AllCells/Raw/fig/feature_ZZFR_SampleAverage_IG_all_sample=6_standadized_group_nolegend_ylim_-0.20_0.20_rotate.png
 ```
 
-as we show in Fig.4D of the paper.
+which should produce plot similar to Fig.4D of the paper.
 
 
 
