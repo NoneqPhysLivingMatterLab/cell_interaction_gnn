@@ -38,7 +38,7 @@ py_filepath = git_rep_base + "codes/training/run_training_cell_fate_gnn.py"
 # set the number of GPU you want to use
 gpu = 0
 # set the number of samples you want to run
-n_batch = 2
+n_batch = 6
 
 
 path_gpu = "./gpu.txt"
@@ -57,6 +57,7 @@ gpu_load = Read1LineText(path_gpu)
 for i in range(n_batch):
     print(i)
 
+    os.environ['CUDA_VISIBLE_DEVICES'] = "%d"%gpu
     with open("./output_network_%d.txt" % i, 'w') as fp:
         proc = subprocess.Popen(['python', py_filepath], stdout=fp, stderr=fp)
         print("process id = %s" % proc.pid)

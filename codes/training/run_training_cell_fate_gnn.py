@@ -340,13 +340,9 @@ test_path_list, cellID_test_path_list = gnn_models.ReturnListFilenamesNetworkAnd
 
 # +
 # Check GPUs
-if gpu != -1:  # if gpu==-1, use cpu
-    os.environ['CUDA_VISIBLE_DEVICES'] = "%d" % gpu
+if gpu != -1:  
+    device = "cuda:0" 
 
-print(th.cuda.device_count(), "GPUs available")
-print(th.__version__)  # 0.4.0
-
-device = th.device("cuda" if th.cuda.is_available() else "cpu")
 print(device)
 print(th.cuda.current_device())
 
