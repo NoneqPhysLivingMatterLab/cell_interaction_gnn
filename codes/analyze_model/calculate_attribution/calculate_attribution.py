@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """Calculate attribution"""
-
+import os
 import copy
 import time
 import matplotlib.pyplot as plt
@@ -24,10 +24,10 @@ import torch as th
 import calculate_attribution_functions as att_func
 from training import gnn_models
 from functions import system_utility as sutil
-import os
 import sys
 version = 26
 print("version=%d" % version)
+
 
 
 
@@ -84,27 +84,24 @@ ClassList = yaml_obj["ClassList"]
 
 
 # %%
+# Check GPUs
+
 path_gpu = "./gpu.txt"
 
 if os.path.isfile(path_gpu) == True:
-
+    
     gpu_load = sutil.Read1LineText(path_gpu)
     gpu = gpu_load[0]
     gpu = int(gpu)
 
-else:
-    gpu = 0  # -1 for cpu , gpu = 0 or 1
-
-if gpu != -1:  # if gpu==-1, use cpu
-    os.environ['CUDA_VISIBLE_DEVICES'] = "%d" % gpu
-
-#print(th.cuda.device_count(), "GPUs available")
-print(th.__version__)  # 0.4.0
-
-
-device = th.device("cuda" if th.cuda.is_available() else "cpu")
+    if gpu >=0: 
+        device = "cuda:0" # this is correct
+    else: 
+        print("error: check gpu number")
+        
 print(device)
-print(th.cuda.current_device())
+#print("current gpu device is")
+#print(th.cuda.current_device())
 
 
 # %%
@@ -233,9 +230,8 @@ if architecture == "NSP":
 
 # %%
 model = model.to(device)
-model.load_state_dict(th.load(model_path))
+model.load_state_dict(th.load(model_path, map_location=device))
 model.eval()
-
 
 num_time = len(time_list)
 # network used in learning
@@ -305,17 +301,19 @@ for i, IDlist_path in enumerate(IDlist_path_list):
     # print(network_path)
     # print(IDlist_path)
     # print("start:%d,end:%d"%(frame_start,frame_end))
-
     network_load = sutil.PickleLoad(network_path)
 
     #print("Original network")
     # print(network_load)
+    
+    input_template = network_load.to(device) 
 
-    input_template = network_load.to(device)
-    input_original = copy.deepcopy(network_load)
-    input_blank = copy.deepcopy(network_load)
+    input_original = copy.deepcopy(network_load).to(device)
+    input_blank = copy.deepcopy(network_load).to(device)
 
-    input_template_cp = copy.deepcopy(input_template)
+    input_template_cp = copy.deepcopy(input_template).to(device)
+    
+
 
     for time_name in time_list:
         input_blank.nodes[time_name].data[feature] = input_original.nodes[time_name].data[feature] * 0
@@ -340,8 +338,8 @@ for i, IDlist_path in enumerate(IDlist_path_list):
     # print(existing_IDList)
     # print(new_index)
 
-    input_original_exist = copy.deepcopy(input_template_exist)
-    input_blank_exist = copy.deepcopy(input_template_exist)
+    input_original_exist = copy.deepcopy(input_template_exist).to(device)
+    input_blank_exist = copy.deepcopy(input_template_exist).to(device)
 
     for time_name in time_list:
         input_blank_exist.nodes[time_name].data[feature] = input_original_exist.nodes[time_name].data[feature] * 0
@@ -355,6 +353,7 @@ for i, IDlist_path in enumerate(IDlist_path_list):
 
     y_score_list_all, IG_list_all = att_func.compute_integrated_gradient_AllNode2(
         n, existing_IDList, input_original_exist, input_template_exist, input_blank_exist, input_original, model, time_list, feature, new_index, nodeID_list, ClassList)
+
 
     sutil.PickleDump(y_score_list_all, label_all_dir +
                      "y_score_list_all.pickle")
@@ -430,6 +429,7 @@ for i, IDlist_path in enumerate(IDlist_path_list):
     file_time = open(time_filename, "w")
     file_time.write(time_rec)
     file_time.close()
+    
 
 
 # %%
@@ -582,4 +582,3 @@ for i, IDlist_path in enumerate(IDlist_path_list):
     file_time.close()
 
 
-# %%

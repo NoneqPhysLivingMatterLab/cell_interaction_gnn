@@ -16,7 +16,7 @@
 import subprocess
 # import sys
 import time
-# import os
+import os
 
 
 from functions import system_utility as sutil
@@ -29,7 +29,7 @@ git_rep_base = sutil_file_path.replace(remove_letter, '')
 
 program_path = git_rep_base + \
     "codes/analyze_model/calculate_attribution/calculate_attribution.py"
-gpu = 3
+gpu = 1
 
 
 path_gpu = "./gpu.txt"
@@ -54,6 +54,7 @@ for count, base_w in enumerate(base_list):
 
     #msg = run_and_capture(['sh', 'all.sh'])
     #print (msg)
+    os.environ['CUDA_VISIBLE_DEVICES'] = "%d"%gpu
 
     with open(base_list[count] + "/output_calculate_attribution.txt", 'w') as fp:
         # Use this to run parallel. But to load filename correctly. we wait.
