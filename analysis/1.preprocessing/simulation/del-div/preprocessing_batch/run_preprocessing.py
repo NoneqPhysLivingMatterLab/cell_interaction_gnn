@@ -106,3 +106,5 @@ for count, base_path in enumerate(base_path_list):
     with open(base_path_list[count] + "output_preprocessing_ExportCellStateForCrop_%d_%d.txt" % (crop_width, crop_height), 'w') as fp:
 
         proc = subprocess.run(['python', program_path4], stdout=fp, stderr=fp)
+
+

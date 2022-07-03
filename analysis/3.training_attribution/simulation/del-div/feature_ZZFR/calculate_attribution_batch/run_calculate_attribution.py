@@ -29,7 +29,7 @@ git_rep_base = sutil_file_path.replace(remove_letter, '')
 
 program_path = git_rep_base + \
     "codes/analyze_model/calculate_attribution/calculate_attribution.py"
-gpu = 1
+gpu = 0
 
 
 path_gpu = "./gpu.txt"
@@ -63,3 +63,5 @@ for count, base_w in enumerate(base_list):
         print("process id = %s" % proc.pid)
 
     time.sleep(60)
+
+

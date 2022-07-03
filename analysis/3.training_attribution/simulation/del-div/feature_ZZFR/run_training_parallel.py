@@ -36,7 +36,7 @@ git_rep_base = sutil_file_path.replace(remove_letter, '')
 py_filepath = git_rep_base + "codes/training/run_training_cell_fate_gnn.py"
 
 # set the number of GPU you want to use
-gpu = 0
+gpu = 1
 # set the number of samples you want to run
 n_batch = 6
 
@@ -62,3 +62,5 @@ for i in range(n_batch):
         proc = subprocess.Popen(['python', py_filepath], stdout=fp, stderr=fp)
         print("process id = %s" % proc.pid)
     time.sleep(20)
+
+

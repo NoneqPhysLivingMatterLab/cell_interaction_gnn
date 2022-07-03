@@ -22,7 +22,7 @@ import os
 
 from functions import system_utility as sutil
 
-gpu = 1
+gpu = 0
 path_gpu = "./gpu.txt"
 with open(path_gpu, 'w') as f:
     f.write("%s\n" % gpu)

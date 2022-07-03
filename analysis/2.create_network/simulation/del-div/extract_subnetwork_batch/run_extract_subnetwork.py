@@ -51,3 +51,6 @@ for count, base in enumerate(base_list):
 
     with open(base_list[count] + "output_extract_subnetwork_%d_%d_%d.txt" % (crop_width, crop_height, crop_height_shift), 'w') as fp:
         proc = subprocess.run(["python", program_path3], stdout=fp, stderr=fp)
+# -
+
+
