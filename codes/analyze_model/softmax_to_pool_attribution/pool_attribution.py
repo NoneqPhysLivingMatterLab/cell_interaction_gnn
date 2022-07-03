@@ -80,16 +80,8 @@ yaml_obj = sutil.LoadYml(path_yml)
 
 n = yaml_obj["n"]
 
-#plot_option = yaml_obj["plot_option"]
-# cell_select = yaml_obj["cell_select"] ## "correct" for only correct cells, all for all the cells
 
 ModelType = yaml_obj["ModelType"]
-
-#subnetwork_name = yaml_obj["subnetwork_name"]
-
-gpu = yaml_obj["gpu"]
-
-#attribution_version = yaml_obj["attribution_version"]
 
 n_net = yaml_obj["n_net"]
 top_n = yaml_obj["top_n"]
@@ -99,20 +91,6 @@ LabelType = yaml_obj["LabelType"]
 skip_misc_pool_attribution = yaml_obj["skip_misc_pool_attribution"]
 
 celltype_list = yaml_obj["celltype_list"]
-
-
-# %%
-
-if gpu != -1:  # if gpu==-1, use cpu
-    os.environ['CUDA_VISIBLE_DEVICES'] = "%d" % gpu
-
-print(th.cuda.device_count(), "GPUs available")
-print(th.__version__)  # 0.4.0
-
-
-device = th.device("cuda" if th.cuda.is_available() else "cpu")
-print(device)
-print(th.cuda.current_device())
 
 
 # %%
@@ -182,13 +160,10 @@ Output:
     
         Using this cell type name list, we pool IGs in each subnetwork. 
 
-    - ForEachCellType/data/T1P1F4
-
-        IGs are pooled for each subgraph and for each feature category(ex.T1P1F4).
-
-        - features.pickle
-        - IG.pickle
-        - index.pickle
+    - IGs are pooled for each subgraph and for each feature category(ex.T1P1F4), and saved as dictionaries with keys such as T1P1F4
+        - features_all_dict.pickle
+        - IG_all_dict.pickle
+        - index_all_dict.pickle
     - misc: not used for the further analysis.
 """
 
@@ -224,11 +199,11 @@ for CorrectClass in [0, 1, 2]:
 
             cellIDdir_save = label_dir + target_dirname + "/"
 
-            Celltypedir_save = label_dir + target_dirname + "/" + "ForEachCellType/Fig/"
-            sutil.MakeDirs(Celltypedir_save)
+            #Celltypedir_save = label_dir + target_dirname + "/" + "ForEachCellType/Fig/"
+            #sutil.MakeDirs(Celltypedir_save)
 
-            Celltypedir_data_save = label_dir + target_dirname + "/" + "ForEachCellType/data/"
-            sutil.MakeDirs(Celltypedir_data_save)
+            #Celltypedir_data_save = label_dir + target_dirname + "/" + "ForEachCellType/data/"
+            #sutil.MakeDirs(Celltypedir_data_save)
 
             IntegratedGradient_target_1D_path = cellIDdir_save + \
                 "IntegratedGradient_target_1D.pickle"
@@ -286,16 +261,24 @@ for CorrectClass in [0, 1, 2]:
                 fig.subplots_adjust(left=left, right=right,
                                     bottom=bottom, top=top)
 
-            # print(Celltypedir_save)
+
+
+            # save as dictionary
+            IG_dict = {}
+            features_dict = {}
+            index_dict = {}
+            
             for j in range(num_time):
                 for k in range(3):
                     for l in range(input_size):
+                        
 
                         cell_type = "T%dP%dF%d" % (j, k, l)
                         cell_type2 = "T%d\nP%d\nF%d" % (j, k, l)
 
-                        EachCellDirPath = Celltypedir_data_save + cell_type + "/"
-                        sutil.MakeDirs(EachCellDirPath)
+                        # EachCellDirPath = Celltypedir_data_save + cell_type + "/"
+                        # sutil.MakeDirs(EachCellDirPath)
+                        
 
                         index = [i for i, x in enumerate(
                             cell_type_list) if x == cell_type]
@@ -305,25 +288,21 @@ for CorrectClass in [0, 1, 2]:
                         IG = IntegratedGradient_target_1D[index]
 
                         features = features_target_1D[index]
+                        
+                        IG_dict[cell_type] = IG
+                        features_dict[cell_type] = features
+                        index_dict[cell_type] = index
 
-                        IG_filename = "IG.pickle"
-                        features_filename = "features.pickle"
-                        index_filename = "index.pickle"
-
-                        sutil.PickleDump(IG, EachCellDirPath + IG_filename)
-                        sutil.PickleDump(
-                            features, EachCellDirPath + features_filename)
-                        sutil.PickleDump(
-                            index, EachCellDirPath + index_filename)
-
-                        xlist = [cell_type2]*len(index)
-
-                        if plot == 1:
-                            ax.set_title(target_dirname)
-                            ax.scatter(xlist, IG, color=clist[j], s=10)
-
-                        # ax2.set_title(target_dirname)
-                        #ax2.scatter(xlist,IG,color=clist[j],s = 10)
+            
+            IG_filename = "IG_all_dict.pickle"
+            features_filename = "features_all_dict.pickle"
+            index_filename = "index_all_dict.pickle"
+            sutil.PickleDump(IG_dict, cellIDdir_save + IG_filename)
+            sutil.PickleDump(
+                features_dict, cellIDdir_save + features_filename)
+            sutil.PickleDump(
+                index_dict, cellIDdir_save + index_filename)
+            
 
             if plot == 1:
                 fig.show()
@@ -377,10 +356,10 @@ for CorrectClass in [0, 1, 2]:
 Input: IGs pooled for each subgraph and for each feature category(ex.T1P1F4).
 
 - attribution_n=50_MaxMacroF1/test/test_0/AllCells/0/cellID=62_reallabel=2
-    - ForEachCellType/data/T1P1F4
-        - features.pickle
-        - IG.pickle
-        - index.pickle
+    - IGs pooled for each subgraph and for each feature category(ex.T1P1F4), and saved as dictionaries with keys such as T1P1F4
+        - features_all_dict.pickle
+        - IG_all_dict.pickle
+        - index_all_dict.pickle
         
 Output: 
 - attribution_n=50_MaxMacroF1_nnet=11/test_summary/AllCells/data/0,1,2
@@ -391,7 +370,6 @@ Output:
     We use this data when we plot the pooled IGs.
 
 """
-
 
 # print(base_dir)
 #clist = make_cmlist2("viridis",num_time,200)
@@ -450,33 +428,32 @@ for CorrectClass in [0, 1, 2]:
 
                         cellIDdir_save = label_dir + target_dirname + "/"
 
-                        Celltypedir_save = label_dir + target_dirname + "/" + "ForEachCellType/Fig/"
+                        
+                        IG_filename = "IG_all_dict.pickle"
+                        features_filename = "features_all_dict.pickle"
+                        index_filename = "index_all_dict.pickle"
+                        IG_dict = sutil.PickleLoad(cellIDdir_save + IG_filename)
+                        features_dict = sutil.PickleLoad(
+                            cellIDdir_save + features_filename)
+                        # index_dict = sutil.PickleLoad(
+                            # EachCellDirPath + index_filename)
+                        
+                        IG = IG_dict[cell_type]
+                        features = features_dict[cell_type]
+            
 
-                        Celltypedir_data_save = label_dir + target_dirname + "/" + "ForEachCellType/data/"
-
-                        EachCellDirPath = Celltypedir_data_save + cell_type + "/"
-
-                        IG_filename = "IG.pickle"
-                        features_filename = "features.pickle"
-                        index_filename = "index.pickle"
-
-                        IG = sutil.PickleLoad(EachCellDirPath + IG_filename)
-                        features = sutil.PickleLoad(
-                            EachCellDirPath + features_filename)
-
-                        # print(IG.shape)
-                        # print(features.shape)
-                        # print(features)
 
                         IG_list_all_forEachType = np.append(
                             IG_list_all_forEachType, IG)
                         features_list_all_forEachType = np.append(
                             features_list_all_forEachType, features)
 
+                # TODO: make these dictionaries as well
                 np.savetxt(celltype_data_dir_save +
                            "IG_list_all.txt", IG_list_all_forEachType)
                 np.savetxt(celltype_data_dir_save +
                            "features_list_all.txt", features_list_all_forEachType)
+                           
 
 
 # %%

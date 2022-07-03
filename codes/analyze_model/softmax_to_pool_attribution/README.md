@@ -118,13 +118,11 @@ Output:
     
         Using this cell type name list, we pool IGs in each subnetwork. 
 
-    - ForEachCellType/data/T1P1F4
-
-        IGs are pooled for each subgraph and for each feature category(ex.T1P1F4).
-
-        - features.pickle
-        - IG.pickle
-        - index.pickle
+    - IGs are pooled for each subgraph and for each feature category(ex.T1P1F4), and saved as dictionaries with keys such as T1P1F4
+    
+        - features_all_dict.pickle
+        - IG_all_dict.pickle
+        - index_all_dict.pickle
         
 - attribution_n=50_MaxMacroF1_nnet=11/test_summary/AllCells/data/0,1,2
 

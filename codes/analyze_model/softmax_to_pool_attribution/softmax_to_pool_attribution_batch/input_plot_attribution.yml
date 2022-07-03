@@ -1,9 +1,6 @@
 n: 50   # number of discretization
 ModelType: "MaxMacroF1"
 
-gpu: 3 #Select GPU number used for loading data
-
-
 ##Const. Don't change.
 #attribution_version: 26
 n_net: "all"

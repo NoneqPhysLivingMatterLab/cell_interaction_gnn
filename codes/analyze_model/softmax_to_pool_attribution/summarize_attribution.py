@@ -24,7 +24,7 @@ import collections
 from training import gnn_models
 import os
 import sys
-version = 8
+version = 9
 print("version=%d" % version)
 
 print("summarize attribution")
@@ -79,26 +79,13 @@ n = yaml_obj["n"]
 
 ModelType = yaml_obj["ModelType"]
 celltype_list = yaml_obj["celltype_list"]
-gpu = yaml_obj["gpu"]
+# gpu = yaml_obj["gpu"]
 n_net = yaml_obj["n_net"]
 top_n = yaml_obj["top_n"]
 LabelType = yaml_obj["LabelType"]
 skip_misc = yaml_obj["skip_misc"]
 m = yaml_obj["m"]  # log top m th attribution data for plot
 m_plot = yaml_obj["m_plot"]  # plot only m_plotth
-
-
-# %%
-if gpu != -1:  # if gpu==-1, use cpu
-    os.environ['CUDA_VISIBLE_DEVICES'] = "%d" % gpu
-
-print(th.cuda.device_count(), "GPUs available")
-print(th.__version__)  # 0.4.0
-
-
-device = th.device("cuda" if th.cuda.is_available() else "cpu")
-print(device)
-# print(th.cuda.current_device())
 
 
 # %%
@@ -164,29 +151,18 @@ for CorrectClass in [0, 1, 2]:
 
         label_dir = att_test_dir + "test_%d/AllCells/%d/" % (i, CorrectClass)
 
-        # print("label_dir")
-        # print(label_dir)
-
         files_tmp = os.listdir(label_dir)
 
-        # print(files_tmp)
 
         if LabelType != "all" and LabelType != "AllCells":
             files = [s for s in files_tmp if LabelType in s]
         else:
             files = files_tmp
 
-        # print(files)
 
         frame_start = i
         frame_end = i+num_time-1
 
-        network_path = networkdir_path + files_test[i]
-        # print(network_path)
-        network_load = sutil.PickleLoad(network_path)
-
-        # print("files")
-        # print(files)
 
         for target_dirname in files:
 

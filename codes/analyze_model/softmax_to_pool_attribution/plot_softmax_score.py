@@ -75,7 +75,7 @@ n = yaml_obj["n"]
 
 ModelType = yaml_obj["ModelType"]
 
-gpu = yaml_obj["gpu"]
+# gpu = yaml_obj["gpu"]
 
 #attribution_version = yaml_obj["attribution_version"]
 
@@ -85,18 +85,6 @@ top_n = yaml_obj["top_n"]
 LabelType = yaml_obj["LabelType"]
 
 celltype_list = yaml_obj["celltype_list"]
-
-
-# %%
-if gpu != -1:  # if gpu==-1, use cpu
-    os.environ['CUDA_VISIBLE_DEVICES'] = "%d" % gpu
-
-print(th.cuda.device_count(), "GPUs available")
-print(th.__version__)  # 0.4.0
-
-device = th.device("cuda" if th.cuda.is_available() else "cpu")
-print(device)
-# print(th.cuda.current_device())
 
 
 # %%
@@ -173,10 +161,6 @@ for LabelType in LabelType_list:
 
             frame_start = i
             frame_end = i+num_time-1
-
-            network_path = networkdir_path + files_test[i]
-            # print(network_path)
-            network_load = sutil.PickleLoad(network_path)
 
             for target_dirname in files:
 
