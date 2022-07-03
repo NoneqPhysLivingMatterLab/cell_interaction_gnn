@@ -16,11 +16,17 @@
 
 import subprocess
 # import sys
-# import time
-# import os
+import time
+import os
 
 
 from functions import system_utility as sutil
+
+gpu = 1
+path_gpu = "./gpu.txt"
+with open(path_gpu, 'w') as f:
+    f.write("%s\n" % gpu)
+    
 
 # Detect git repository path from system_utility.py.
 sutil_file_path = sutil.__file__
@@ -51,23 +57,37 @@ for count, base_w in enumerate(base_list):
     with open(base_w, mode='w') as f:
         f.write(base_list[count])
 
-    #msg = run_and_capture(['sh', 'all.sh'])
-    #print (msg)
-
+    os.environ['CUDA_VISIBLE_DEVICES'] = "%d"%gpu
+    
+    time_sta = time.time()
+    
     with open(base_list[count] + "/output_softmax_to_pool_attribution_plot_softmax_score.txt", 'w') as fp:
         # Use run to load filenames safely.
         proc = subprocess.run(['python', program_path1], stdout=fp, stderr=fp)
         print("finished program1")
-
+        
+    time_end = time.time()
+    tim = (time_end- time_sta)/60
+    print("%f min"%tim)
+    time_sta = time.time()
+    
     with open(base_list[count] + "/output_softmax_to_pool_attribution_summarize_attribution.txt", 'w') as fp:
         # Use run to load filenames safely.
         proc = subprocess.run(['python', program_path2], stdout=fp, stderr=fp)
         print("finished program2")
+        
+    time_end = time.time()
+    tim = (time_end- time_sta)/60
+    print("%f min"%tim)
+    time_sta = time.time()
 
     with open(base_list[count] + "/output_softmax_to_pool_attribution_pool_attribution.txt", 'w') as fp:
         # Use run to load filenames safely.
         proc = subprocess.run(['python', program_path3], stdout=fp, stderr=fp)
         print("finished program3")
         #print( "process id = %s" % proc.pid )
+    time_end = time.time()
+    tim = (time_end- time_sta)/60
+    print("%f min"%tim)
 
-    # time.sleep(60)
+

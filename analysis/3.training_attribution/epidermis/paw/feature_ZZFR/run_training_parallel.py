@@ -15,10 +15,8 @@
 
 from functions import system_utility as sutil
 import subprocess
-# import sys
 import os
 import time
-# import numpy as np
 
 
 def Read1LineText(path):
@@ -59,6 +57,7 @@ gpu_load = Read1LineText(path_gpu)
 for i in range(n_batch):
     print(i)
 
+    os.environ['CUDA_VISIBLE_DEVICES'] = "%d"%gpu
     with open("./output_network_%d.txt" % i, 'w') as fp:
         proc = subprocess.Popen(['python', py_filepath], stdout=fp, stderr=fp)
         print("process id = %s" % proc.pid)
